@@ -1,0 +1,87 @@
+/* Reset some default styles */
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the body and header */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+h1 {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+    margin: 0;
+}
+
+/* Style the tabs */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #007BFF;
+    padding: 10px;
+}
+
+.tabs button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+/* Style the form elements */
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+select, input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Style the calculate button */
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Style the result box */
+p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tabs button {
+        margin: 5px 0;
+    }
+
+    select, input, button {
+        width: 80%;
+    }
+}

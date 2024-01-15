@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rectangular Battery Dimension Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3019502650827663"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Rectangular Battery Dimension Calculator</h1>
+    
+    <label for="voltage">Voltage (Volts): </label>
+    <select id="voltage">
+        <option value="12">12V</option>
+        <option value="24">24V</option>
+        <option value="36">36V</option>
+        <option value="48">48V</option>
+        <option value="52">52V</option>
+        <option value="60">60V</option>
+        <option value="72">72V</option>
+        <option value="96">96V</option>
+    </select><br><br>
 
+    <label for="capacity">Capacity (Ah): </label>
+    <select id="capacity">
+        <option value="5">5 Ah</option>
+        <option value="10">10 Ah</option>
+        <option value="15">15 Ah</option>
+        <option value="20">20 Ah</option>
+        <option value="25">25 Ah</option>
+        <option value="30">30 Ah</option>
+        <option value="35">35 Ah</option>
+        <option value="40">40 Ah</option>
+        <option value="45">45 Ah</option>
+        <option value="50">50 Ah</option>
+    </select><br><br>
+
+    <button id="calculate">Calculate Battery Dimensions</button><br><br>
+
+    <p id="result">Battery Dimensions: <span id="length">N/A</span> cm x <span id="width">N/A</span> cm x 8.40 cm</p>
+  <footer style="text-align: center; font-size: 12px; margin-top: 10px;">
+      <p style="margin: 0; line-height: 1.5;">
+        This calculator is only accurate with baozaboy™ batteries.<br>Disclaimer: The calculations in this tool are estimates and are based on the assumption that the battery cells used are 21700 lithium-ion cells with a rated capacity of 5AH, a rated norminal voltage of 3.7V, and dimensions of 2.1cm x 2.1cm x 7cm (calculated using l x b x h). 
+      </p>
+  </footer>
+
+    <script src="batteryCalculator.js"></script>
+</body>
+</html>
