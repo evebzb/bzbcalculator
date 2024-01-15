@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This Payment Calculator will help you effectively plan your finances and determine payment options for purchasing our products. Calculate full payments or explore installment plans with ease." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3019502650827663"
+     crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #paymentDetails {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #007BFF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            display: none;
+            margin: 0 auto;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Calculator</h1>
+        <form id="paymentForm">
+            <label for="productCost">Product Cost (SGD):</label>
+            <input type="number" id="productCost" name="productCost" required>
 
+            <label for="paymentType">Payment Type:</label>
+            <select id="paymentType" name="paymentType" required>
+                <option value="full">Full Payment</option>
+                <option value="installment">Installment</option>
+            </select>
+
+            <div id="installmentOptions" style="display: none;">
+                <label for="installmentProvider">Installment Provider:</label>
+                <select id="installmentProvider" name="installmentProvider" required>
+                    <option value="atome">Atome</option>
+                    <option value="latitudePay">Latitude Pay</option>
+                    <option value="inhouse">In-House</option>
+                </select>
+                <div id="atomeLatitudePayOptions" style="display: none;">
+                    <label for="installmentMonths">Number of Months:</label>
+                    <select id="installmentMonths" name="installmentMonths">
+                        <option value="3">3 Months</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" id="calculateButton">Calculate</button>
+            <div class="loader" id="loadingSpinner"></div>
+        </form>
+
+        <div id="paymentDetails">
+            <h2>Payment Details</h2>
+            <p id="firstMonthPayment"></p>
+            <p id="secondMonthPayment"></p>
+            <p id="thirdMonthPayment"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('paymentType').addEventListener('change', function () {
+            var installmentOptions = document.getElementById('installmentOptions');
+            var paymentType = this.value;
+
+            if (paymentType === 'installment') {
+                installmentOptions.style.display = 'block';
+            } else {
+                installmentOptions.style.display = 'none';
+            }
+        });
+
+        document.getElementById('calculateButton').addEventListener('click', function () {
+            var productCost = parseFloat(document.getElementById('productCost').value);
+            var paymentType = document.getElementById('paymentType').value;
+            var installmentProvider = document.getElementById('installmentProvider').value;
+            var loadingSpinner = document.getElementById('loadingSpinner');
+            var paymentDetails = document.getElementById('paymentDetails');
+
+            loadingSpinner.style.display = 'block'; // Display the loading spinner while calculating.
+            paymentDetails.style.display = 'none'; // Hide the payment details before calculating.
+
+            if (paymentType === 'full') {
+                var fullPayment = productCost;
+                displayPaymentDetails(fullPayment, 0, 0);
+                hideLoadingSpinner();
+            } else if (paymentType === 'installment') {
+                var installmentMonths = parseInt(document.getElementById('installmentMonths').value);
+
+                var firstMonthPayment = 0;
+                var secondMonthPayment = 0;
+                var thirdMonthPayment = 0;
+
+                setTimeout(function () {
+                    if (installmentProvider === 'atome' || installmentProvider === 'latitudePay') {
+                        if (productCost <= 1000) {
+                            firstMonthPayment = (productCost / 3) + (productCost * 0.07);
+                            secondMonthPayment = (productCost / 3) + (productCost * 0.035);
+                            thirdMonthPayment = (productCost / 3) + (productCost * 0.035);
+                        } else {
+                            firstMonthPayment = (productCost - 1000) + ((1000 / 3) + (1000 * 0.07));
+                            secondMonthPayment = 333.33;
+                            thirdMonthPayment = 333.33;
+                        }
+                        displayPaymentDetails(firstMonthPayment, secondMonthPayment, thirdMonthPayment);
+                    } else if (installmentProvider === 'inhouse') {
+                        // Calculate in-house installment payments based on your previous requirements.
+                        firstMonthPayment = (productCost / 3) * 1.16; // 15% interest for the first month
+                        secondMonthPayment = (productCost / 3) * 1.14; // 13% interest for the second month
+                        thirdMonthPayment = (productCost / 3) * 1.12; // 11% interest for the third month
+                        displayPaymentDetails(firstMonthPayment, secondMonthPayment, thirdMonthPayment);
+                    }
+                    hideLoadingSpinner();
+                }, 1500); // Simulate a 1.5-second delay to show the loading process.
+            }
+        });
+
+        function displayPaymentDetails(firstMonthPayment, secondMonthPayment, thirdMonthPayment) {
+            var paymentDetails = document.getElementById('paymentDetails');
+            var firstMonth = document.getElementById('firstMonthPayment');
+            var secondMonth = document.getElementById('secondMonthPayment');
+            var thirdMonth = document.getElementById('thirdMonthPayment');
+
+            firstMonth.textContent = 'First Month Payment: SGD ' + firstMonthPayment.toFixed(2);
+            secondMonth.textContent = 'Second Month Payment: SGD ' + secondMonthPayment.toFixed(2);
+            thirdMonth.textContent = 'Third Month Payment: SGD ' + thirdMonthPayment.toFixed(2);
+
+            paymentDetails.style.display = 'block';
+        }
+
+        function hideLoadingSpinner() {
+            var loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
