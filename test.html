@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lithium Battery Label Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        button[type="submit"], button[type="button"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .label-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .label-preview {
+            max-width: 100%;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lithium Battery Label Generator</h1>
+    <div class="form-container">
+        <form id="labelForm">
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="productName" required>
+
+            <label for="capacity">Capacity (mAh):</label>
+            <input type="text" id="capacity" name="capacity" required>
+
+            <label for="voltage">Voltage (V):</label>
+            <input type="text" id="voltage" name="voltage" required>
+
+            <button type="submit">Generate Label</button>
+        </form>
+    </div>
+
+    <div id="labelContainer" class="label-container">
+        <h2>Generated Label:</h2>
+        <div id="generatedLabel" class="label-preview"></div>
+        <button id="printButton">Save Label as Image</button>
+    </div>
+
+    <script>
+        const labelForm = document.getElementById('labelForm');
+        const labelContainer = document.getElementById('labelContainer');
+        const generatedLabel = document.getElementById('generatedLabel');
+        const printButton = document.getElementById('printButton');
+
+        labelForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const productName = document.getElementById('productName').value;
+            const capacity = document.getElementById('capacity').value;
+            const voltage = document.getElementById('voltage').value;
+
+            const label = `
+                <div style="padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                    <h3 style="margin-bottom: 10px;">Product Name:</h3>
+                    <p>${productName}</p>
+                    <h3 style="margin-bottom: 10px;">Capacity (mAh):</h3>
+                    <p>${capacity}</p>
+                    <h3 style="margin-bottom: 10px;">Voltage (V):</h3>
+                    <p>${voltage}</p>
+                </div>`;
+
+            generatedLabel.innerHTML = label;
+            labelContainer.style.display = 'block';
+        });
+
+        printButton.addEventListener('click', function() {
+            const labelContainer = document.querySelector('.label-preview');
+
+            html2canvas(labelContainer).then(function(canvas) {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'battery_label.png';
+                link.click();
+            });
+        });
+    </script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>

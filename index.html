@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="description" content="Calculate the estimated battery life, range, and number of orders for your e-bike based on voltage, capacity, and controller/motor power consumption.">
+  <meta name="keywords" content="e-bike, electric bike, battery calculator, battery life, range, power consumption, voltage, capacity, estimated number of orders">
+  <meta name="author" content="baozaboy">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Bike Battery Calculator</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3019502650827663"
+     crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    
+    footer {
+      background-color: #f4f4f4;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+  <script>
+    function calculateBatteryLife() {
+      var voltage = parseFloat(document.getElementById("voltage").value);
+      var capacity = parseFloat(document.getElementById("capacity").value);
+      var powerConsumption = parseFloat(document.getElementById("power-consumption").value);
+
+      var batteryLife = (capacity * voltage / powerConsumption * 2).toFixed(2);
+      var batteryLifee = (capacity * voltage / powerConsumption * 3.2).toFixed(2);
+
+      var estimatedRange;
+
+      if (voltage > 0 && voltage <= 36) {
+        estimatedRange = (batteryLife * 12).toFixed(2);
+      } else if (voltage > 36 && voltage <= 48) {
+        estimatedRange = (batteryLife * 13).toFixed(2);
+      } else if (voltage > 48 && voltage <= 60) {
+        estimatedRange = (batteryLife * 14).toFixed(2);
+      } else if (voltage > 60 && voltage <= 72) {
+        estimatedRange = (batteryLife * 14).toFixed(2);
+      } else if (voltage > 72 && voltage <= 96) {
+        estimatedRange = (batteryLife * 15).toFixed(2);
+      } else {
+        estimatedRange = "N/A";
+      }
+
+      var estimatedNumberOfOrders;
+
+      if (powerConsumption > 0 && powerConsumption <= 200) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 17).toFixed(0);
+      } else if (powerConsumption > 200 && powerConsumption <= 500) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 15).toFixed(0);
+      } else if (powerConsumption > 500 && powerConsumption <= 800) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 13).toFixed(0);
+      } else if (powerConsumption > 800 && powerConsumption <= 1000) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 9).toFixed(0);
+      } else if (powerConsumption > 1000 && powerConsumption <= 2000) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 7).toFixed(0);
+      } else if (powerConsumption > 2000 && powerConsumption <= 2500) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 5).toFixed(0);
+      } else if (powerConsumption > 2500 && powerConsumption <= 3050) {
+        estimatedNumberOfOrders = (batteryLife * 60 / 3).toFixed(0);
+      } else {
+        estimatedNumberOfOrders = "N/A";
+      }
+
+      document.getElementById("result").innerHTML = "Estimated Battery Life: " + batteryLifee + " hours<br>Theoretical Battery Life: " + batteryLife + " hours<br>Estimated Range: " + estimatedRange + " km<br>Estimated Number of Orders: " + estimatedNumberOfOrders;
+    }
+  </script>
+</head>
+<body>
+  <h1>E-Bike Battery Calculator</h1>
+  
+  <label for="voltage">Battery Voltage (V):</label>
+  <input type="number" id="voltage" min="0" step="0.1" required>
+
+  <label for="capacity">Battery Capacity (Ah):</label>
+  <input type="number" id="capacity" min="0" step="0.1" required>
+
+  <label for="power-consumption">Motor / Controller Consumption (W):</label>
+  <input type="number" id="power-consumption" min="0" step="0.1" required>
+
+  <button onclick="calculateBatteryLife()">Calculate</button>
+
+  <div id="result"></div>
+  <footer>
+    <p>Disclaimer: The calculations provided by this tool are estimates and may not reflect exact values. The accuracy is within plus or minus 10%. Created by baozaboy™.</p>
+  </footer>
+
+  <!-- Add a button to link to the Rectangular Battery Dimension Calculator -->
+  <button onclick="window.location.href = 'https://calculator.baozaboy.xyz/size/'">Rectangular Battery Dimension Calculator</button>
+</body>
+</html>
