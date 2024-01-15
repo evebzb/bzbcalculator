@@ -167,20 +167,20 @@
                 setTimeout(function () {
                     if (installmentProvider === 'atome' || installmentProvider === 'latitudePay') {
                         if (productCost <= 1000) {
-                            firstMonthPayment = (productCost / 3) + (productCost * 0.07);
-                            secondMonthPayment = (productCost / 3) + (productCost * 0.035);
-                            thirdMonthPayment = (productCost / 3) + (productCost * 0.035);
+                            firstMonthPayment = (productCost / 3) + (productCost * 0.070);
+                            secondMonthPayment = (productCost / 3) + (productCost * 0.075);
+                            thirdMonthPayment = (productCost / 3) + (productCost * 0.080);
                         } else {
-                            firstMonthPayment = (productCost - 1000) + ((1000 / 3) + (1000 * 0.07));
+                            firstMonthPayment = (productCost - 1000) + ((1000 / 3) + (1000 * 0.075));
                             secondMonthPayment = 333.33;
                             thirdMonthPayment = 333.33;
                         }
                         displayPaymentDetails(firstMonthPayment, secondMonthPayment, thirdMonthPayment);
                     } else if (installmentProvider === 'inhouse') {
                         // Calculate in-house installment payments based on your previous requirements.
-                        firstMonthPayment = (productCost / 3) * 1.16; // 15% interest for the first month
-                        secondMonthPayment = (productCost / 3) * 1.14; // 13% interest for the second month
-                        thirdMonthPayment = (productCost / 3) * 1.12; // 11% interest for the third month
+                        firstMonthPayment = (productCost / 3) * 1.165; // 15% interest for the first month
+                        secondMonthPayment = (productCost / 3) * 1.160; // 13% interest for the second month
+                        thirdMonthPayment = (productCost / 3) * 1.155; // 11% interest for the third month
                         displayPaymentDetails(firstMonthPayment, secondMonthPayment, thirdMonthPayment);
                     }
                     hideLoadingSpinner();
