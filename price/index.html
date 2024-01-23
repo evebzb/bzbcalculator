@@ -167,11 +167,11 @@
                 setTimeout(function () {
                     if (installmentProvider === 'atome' || installmentProvider === 'latitudePay') {
                         if (productCost <= 1000) {
-                            firstMonthPayment = (productCost / 3) + (productCost * 0.070);
-                            secondMonthPayment = (productCost / 3) + (productCost * 0.075);
-                            thirdMonthPayment = (productCost / 3) + (productCost * 0.080);
+                            firstMonthPayment = (productCost / 3) + (productCost * 0.075);
+                            secondMonthPayment = (productCost / 3) + (productCost * 0.080);
+                            thirdMonthPayment = (productCost / 3) + (productCost * 0.085);
                         } else {
-                            firstMonthPayment = (productCost - 1000) + ((1000 / 3) + (1000 * 0.075));
+                            firstMonthPayment = (productCost - 1000) + ((1000 / 3) + (1000 * 0.080));
                             secondMonthPayment = 333.33;
                             thirdMonthPayment = 333.33;
                         }
