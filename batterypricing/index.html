@@ -150,9 +150,9 @@
     }
 
     function addCapacityOptions(selectElement, capacities) {
-      capacities.forEach(capacity => {
+      capacities.forEach((capacity, index) => {
         const option = document.createElement('option');
-        option.text = `${capacity} Ah`;
+        option.text = `${capacity} Ah (${index + 1})`;
         option.value = capacity;
         selectElement.add(option);
       });
@@ -161,32 +161,33 @@
     function calculatePrice() {
       const voltage = parseInt(document.getElementById('voltage').value);
       const cellType = document.getElementById('cellType').value;
-      const capacity = parseFloat(document.getElementById('capacity').value);
+      const selectedCapacity = document.getElementById('capacity').value;
+      const capacity = parseFloat(selectedCapacity.split(' ')[0]); // Extract numeric value from the selected capacity option
       const bms = parseInt(document.getElementById('bms').value);
 
       let xsMultiplier;
       switch (voltage) {
-        case 36: xsMultiplier = 10; break;
-        case 48: xsMultiplier = 13; break;
-        case 52: xsMultiplier = 14; break;
-        case 60: xsMultiplier = 16; break;
-        case 72: xsMultiplier = 20; break;
-        case 84: xsMultiplier = 23; break;
-        case 96: xsMultiplier = 26; break;
-        case 120: xsMultiplier = 34; break;
+        case 36: xsMultiplier = 1; break;
+        case 48: xsMultiplier = 2; break;
+        case 52: xsMultiplier = 3; break;
+        case 60: xsMultiplier = 4; break;
+        case 72: xsMultiplier = 5; break;
+        case 84: xsMultiplier = 6; break;
+        case 96: xsMultiplier = 7; break;
+        case 120: xsMultiplier = 8; break;
         default: xsMultiplier = 0;
       }
 
       let cellTypePrice;
       switch (cellType) {
-        case 'Molicels': cellTypePrice = 13; break;
-        case 'Tesla': cellTypePrice = 8.3; break;
+        case 'Molicels': cellTypePrice = 10; break;
+        case 'Tesla': cellTypePrice = 8; break;
         case 'VTC6': cellTypePrice = 8; break;
         case 'LGMJ1': cellTypePrice = 8; break;
         default: cellTypePrice = 0;
       }
 
-      const totalPrice = (xsMultiplier * capacity * cellTypePrice) + bms; 
+      const totalPrice = (voltage * xsMultiplier * capacity * cellTypePrice) + bms; 
 
       document.getElementById('estimatedPrice').innerText = `$${totalPrice.toFixed(2)}`;
     }
