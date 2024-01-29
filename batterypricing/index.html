@@ -170,7 +170,7 @@
       const xsMultiplier = parseInt(document.getElementById('voltage').value);
       const cellType = document.getElementById('cellType').value;
       const selectedCapacity = document.getElementById('capacity').value;
-      const capacityIndex = parseInt(selectedCapacity.split(' ')[1]); // Extract numeric value from the selected capacity option
+      const capacityIndex = parseFloat(selectedCapacity.split(' ')[0]); // Extract numeric value from the selected capacity option
       const bms = parseInt(document.getElementById('bms').value);
 
       let cellTypePrice;
@@ -186,6 +186,7 @@
 
       document.getElementById('estimatedPrice').innerText = `$${totalPrice.toFixed(2)}`;
     }
+
   </script>
 
 </body>
