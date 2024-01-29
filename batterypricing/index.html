@@ -98,7 +98,9 @@
     </select>
 
     <label for="capacity">Capacity:</label>
-    <input type="number" id="capacity" readonly>
+    <select id="capacity">
+      <!-- Options will be dynamically added based on the selected cell type -->
+    </select>
 
     <label for="bms">BMS:</label>
     <select id="bms">
@@ -117,54 +119,51 @@
 
   <script>
     function updateCapacity() {
-      const voltage = parseInt(document.getElementById('voltage').value);
       const cellType = document.getElementById('cellType').value;
+      const capacitySelect = document.getElementById('capacity');
 
-      let capacity;
+      // Clear existing options
+      capacitySelect.innerHTML = '';
 
+      // Add default option
+      const defaultOption = document.createElement('option');
+      defaultOption.text = 'Select Capacity';
+      defaultOption.value = '';
+      capacitySelect.add(defaultOption);
+
+      // Add capacity options based on cell type
       switch (cellType) {
         case 'Molicels':
-          capacity = 4.2;
+          addCapacityOptions(capacitySelect, [4.2, 8.4, 12.6, 16.8, 21, 25.2]);
           break;
         case 'Tesla':
-          capacity = 4.9;
+          addCapacityOptions(capacitySelect, [4.9, 9.8, 14.7, 19.6, 24.5, 29.4]);
           break;
         case 'VTC6':
-          capacity = 3;
+          addCapacityOptions(capacitySelect, [3, 6, 9, 12, 15, 18]);
           break;
         case 'LGMJ1':
-          capacity = 3.5;
+          addCapacityOptions(capacitySelect, [3.5, 7, 10.5, 14, 17.5, 21]);
           break;
         default:
-          capacity = 0;
+          break;
       }
+    }
 
-      document.getElementById('capacity').value = Math.round(voltage * capacity);
+    function addCapacityOptions(selectElement, capacities) {
+      capacities.forEach(capacity => {
+        const option = document.createElement('option');
+        option.text = `${capacity} Ah`;
+        option.value = capacity;
+        selectElement.add(option);
+      });
     }
 
     function calculatePrice() {
       const voltage = parseInt(document.getElementById('voltage').value);
       const cellType = document.getElementById('cellType').value;
+      const capacity = parseFloat(document.getElementById('capacity').value);
       const bms = parseInt(document.getElementById('bms').value);
-
-      let capacity;
-
-      switch (cellType) {
-        case 'Molicels':
-          capacity = 4.2;
-          break;
-        case 'Tesla':
-          capacity = 4.9;
-          break;
-        case 'VTC6':
-          capacity = 3;
-          break;
-        case 'LGMJ1':
-          capacity = 3.5;
-          break;
-        default:
-          capacity = 0;
-      }
 
       const totalPrice = (voltage * capacity * bms) / 10; // Simple pricing formula, you can adjust as needed
 
