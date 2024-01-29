@@ -9,10 +9,7 @@
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f0f0f0;
-      background-image: url('https://source.unsplash.com/random/1600x900');
-      background-size: cover;
-      background-position: center;
+      background: #2b2b2b;
       color: #fff;
       display: flex;
       align-items: center;
@@ -21,7 +18,7 @@
     }
 
     form {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: #424242;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -49,6 +46,8 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+      background-color: #555;
+      color: #fff;
     }
 
     button {
@@ -165,7 +164,29 @@
       const capacity = parseFloat(document.getElementById('capacity').value);
       const bms = parseInt(document.getElementById('bms').value);
 
-      const totalPrice = (voltage * capacity * bms) / 10; // Simple pricing formula, you can adjust as needed
+      let xsMultiplier;
+      switch (voltage) {
+        case 36: xsMultiplier = 10; break;
+        case 48: xsMultiplier = 13; break;
+        case 52: xsMultiplier = 14; break;
+        case 60: xsMultiplier = 16; break;
+        case 72: xsMultiplier = 20; break;
+        case 84: xsMultiplier = 23; break;
+        case 96: xsMultiplier = 26; break;
+        case 120: xsMultiplier = 34; break;
+        default: xsMultiplier = 0;
+      }
+
+      let cellTypePrice;
+      switch (cellType) {
+        case 'Molicels': cellTypePrice = 13; break;
+        case 'Tesla': cellTypePrice = 8.3; break;
+        case 'VTC6': cellTypePrice = 8; break;
+        case 'LGMJ1': cellTypePrice = 8; break;
+        default: cellTypePrice = 0;
+      }
+
+      const totalPrice = (xsMultiplier * capacity * cellTypePrice) + bms; 
 
       document.getElementById('estimatedPrice').innerText = `$${totalPrice.toFixed(2)}`;
     }
