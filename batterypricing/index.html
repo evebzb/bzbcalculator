@@ -188,14 +188,14 @@
 
       let cellTypePrice;
       switch (cellType) {
-        case 'Molicels': cellTypePrice = 10; break;
+        case 'Molicels': cellTypePrice = 13.5; break;
         case 'Tesla': cellTypePrice = 8; break;
-        case 'VTC6': cellTypePrice = 8; break;
-        case 'LGMJ1': cellTypePrice = 8; break;
+        case 'VTC6': cellTypePrice = 6.8; break;
+        case 'LGMJ1': cellTypePrice = 6.5; break;
         default: cellTypePrice = 0;
       }
 
-      const totalPrice = (voltage * xsMultiplier * capacity * cellTypePrice) + bms; 
+      const totalPrice = (xsMultiplier * capacity * cellTypePrice) + bms; 
 
       document.getElementById('estimatedPrice').innerText = `$${totalPrice.toFixed(2)}`;
     }
