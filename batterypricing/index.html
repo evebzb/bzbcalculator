@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battery Configuration</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f0f0;
+      background-image: url('https://source.unsplash.com/random/1600x900');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        background-size: auto;
+      }
+
+      form {
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Battery Configuration</h1>
+
+  <form id="batteryConfigForm">
+    <label for="voltage">Voltage:</label>
+    <select id="voltage" onchange="updateCapacity()">
+      <option value="36">36v (10s)</option>
+      <option value="48">48v (13s)</option>
+      <option value="52">52v (14s)</option>
+      <option value="60">60v (16s)</option>
+      <option value="72">72v (20s)</option>
+      <option value="84">84v (23s)</option>
+      <option value="96">96v (26s)</option>
+      <option value="120">120v (34s)</option>
+    </select>
+
+    <label for="cellType">Cell Type:</label>
+    <select id="cellType" onchange="updateCapacity()">
+      <option value="Molicels">Molicels (4.2ah)</option>
+      <option value="Tesla">Tesla (4.9ah)</option>
+      <option value="VTC6">VTC6 (3ah)</option>
+      <option value="LGMJ1">LGMJ1 (3.5ah)</option>
+    </select>
+
+    <label for="capacity">Capacity:</label>
+    <input type="number" id="capacity" readonly>
+
+    <label for="bms">BMS:</label>
+    <select id="bms">
+      <option value="50">50A</option>
+      <option value="80">80A</option>
+      <option value="120">120A</option>
+      <option value="150">150A</option>
+      <option value="200">200A</option>
+      <option value="300">300A</option>
+    </select>
+
+    <button type="button" onclick="calculatePrice()">Calculate Price</button>
+  </form>
+
+  <h2>Estimated Price: <span id="estimatedPrice">$0.00</span></h2>
+
+  <script>
+    function updateCapacity() {
+      const voltage = parseInt(document.getElementById('voltage').value);
+      const cellType = document.getElementById('cellType').value;
+
+      let capacity;
+
+      switch (cellType) {
+        case 'Molicels':
+          capacity = 4.2;
+          break;
+        case 'Tesla':
+          capacity = 4.9;
+          break;
+        case 'VTC6':
+          capacity = 3;
+          break;
+        case 'LGMJ1':
+          capacity = 3.5;
+          break;
+        default:
+          capacity = 0;
+      }
+
+      document.getElementById('capacity').value = Math.round(voltage * capacity);
+    }
+
+    function calculatePrice() {
+      const voltage = parseInt(document.getElementById('voltage').value);
+      const cellType = document.getElementById('cellType').value;
+      const bms = parseInt(document.getElementById('bms').value);
+
+      let capacity;
+
+      switch (cellType) {
+        case 'Molicels':
+          capacity = 4.2;
+          break;
+        case 'Tesla':
+          capacity = 4.9;
+          break;
+        case 'VTC6':
+          capacity = 3;
+          break;
+        case 'LGMJ1':
+          capacity = 3.5;
+          break;
+        default:
+          capacity = 0;
+      }
+
+      const totalPrice = (voltage * capacity * bms) / 10; // Simple pricing formula, you can adjust as needed
+
+      document.getElementById('estimatedPrice').innerText = `$${totalPrice.toFixed(2)}`;
+    }
+  </script>
+
+</body>
+</html>
